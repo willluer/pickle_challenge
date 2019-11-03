@@ -12,10 +12,10 @@ letter_map = {"0":[],\
               "9":["W","X","Y","Z"]}
 
 def words_to_number(number):
-    # Clean input (remove any non alphanumeric characters and make uppercase)
+    # Clean input (remove any acceptable non alphanumeric characters and make uppercase)
     number = clean_input(number)
 
-    # Check input
+    # Make sure input is valid
     if not is_valid_input(number):
         return "Input phone number must have 10 or 11 digits (xxx-xxx-xxxx or x-xxx-xxx-xxxx) and only accepts the following non alphanumeric characters /().- "
 
@@ -30,25 +30,26 @@ def words_to_number(number):
 
     return output
 
+# Removes acceptable non alphanumeric characters
+# Converts characters to uppercase
 def clean_input(input):
-    # print("Input {}".format(input))
     cleaned = re.sub('[/().-]','',input.upper())
-    # print("Cleaned {}".format(cleaned))
     return cleaned
 
-# TO-DO
+# Makes sure there are only alphanumeric characters in the input
 def is_valid_input(input):
     regex = re.compile('[\W]')
     if regex.search(input):
         return False
     return True
 
+# Dict lookup
 def char_to_number(letter):
     for number,letters in letter_map.items():
         if letter in letters:
             return number
 
-
+# Prepare number for printing
 def number_corrected_format(number):
     if len(number) == 10:
         return number[:3]+"-"+number[3:6]+"-"+number[6:]
