@@ -4,7 +4,7 @@ import utils
 
 class CspSolver:
     def __init__(self,language="en_US",config="config.json"):
-        self.letter_map = utils.get_letter_map(file=config)
+        self.digit_map = utils.get_digit_map(file=config)
         self.language = language
         print(self.language)
 
@@ -32,7 +32,7 @@ class CspSolver:
 
             current_var = d+"-{}".format(n_count[d])
             variables.append(current_var)
-            problem.addVariable(current_var,self.letter_map[d])
+            problem.addVariable(current_var,self.digit_map[d])
         problem.addConstraint(SomeInSetConstraint(["A","E","I","O","U"]))
         problem.addConstraint(FunctionConstraint(self.is_solution),variables)
         return problem

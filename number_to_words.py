@@ -1,5 +1,4 @@
 import re
-import enchant
 from csp import CspSolver
 import argparse
 import utils
@@ -7,24 +6,16 @@ import utils
 class NumberToWords:
     def __init__(self,language="american_english",min_word_size=3,config="config.json"):
 
-        self.letter_map = utils.get_letter_map(file=config)
-        self.char_map = self.construct_char_map()
+        self.digit_map = utils.get_digit_map(file=config)
+        self.char_map = utils.construct_char_map(self.digit_map)
         allowed_languages = utils.get_language_map(file=config)
         self.csp_solver = CspSolver(config=config,language=allowed_languages[language])
 
         self.min_word_size = min_word_size
 
-
-    def construct_char_map(self):
-        char_map = {}
-        for digit,chars in self.letter_map.items():
-            for char in chars:
-                char_map[char] = digit
-        return char_map
-
     def number_to_words(self,number):
         # Clean input (remove any non alphanumeric characters and make uppercase)
-        number = self.clean_input(number)
+        number = utils.clean_input(number)
 
         # Check input
         if not self.is_valid_input(number):
@@ -79,17 +70,11 @@ class NumberToWords:
 
         return self.csp_solver.find_word(test_digits) # None if no word exists, the word if it does
 
-    # Removes acceptable non alphanumeric characters
-    # Converts characters to uppercase
-    def clean_input(self,input):
-        cleaned = re.sub('[/()\+.-]','',input.upper())
-        return cleaned
-
     # Makes sure there are only numeric characters in the input
     def is_valid_input(self,input):
         regex = re.compile('[\W\D]')
         if regex.search(input):
-            print("Input phone number only accepts the following non alphanumeric characters /().-")
+            print("Input phone number only accepts the following non alphanumeric characters /().-+")
             return False
         if not (len(input) == 10 or len(input) == 11):
             print("Input phone number must have 10 or 11 digits")
@@ -99,46 +84,54 @@ class NumberToWords:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("number", help="Phone number to look for words within.")
-    parser.add_argument("--language", "-l", help="Language to use. Options are american_english, australian_english, british_english, german,french", default="american_english")
-    parser.add_argument("--min-word-size", "-m", help="Minimum sized word to find. Must be an int.", type=int,default=3)
+    parser.add_argument("--number","-n", help="Phone number to look for words within. Must contain 10 or 11 digits and must be only digits and the following characters: /()\+.-", \
+                        required=False,default=None)
+    parser.add_argument("--language", "-l", help="Language to use.", \
+                        default="american_english", choices=["american_english","australian_english", "british_english", "german","french"])
+    parser.add_argument("--min-word-size", "-m", help="Minimum sized word to find. Must be an int.", \
+                        type=int,default=3,choices=range(1,12))
     args = parser.parse_args()
 
-    # test = "1-(800)-123433"
-    # test_output = number_to_words(test)
-    # print("{} yields {}\n".format(test,test_output))
+    number_to_words = NumberToWords(language=args.language,\
+                                    min_word_size=args.min_word_size)
 
-    # test = "800-PAI)(--NT@ER"
-    # test_output = number_to_words(test)
-    # print("{} yields {}\n".format(test,test_output))
-    #
-    # test = "1-800-//DOPG /+"
-    # test_output = number_to_words(test)
-    # print("{} yields {}\n".format(test,test_output))
-    #
-    # test = "1-800-WILL 'as fd 3'"
-    # test_output = number_to_words(test)
-    # print("{} yields {}\n".format(test,test_output))
-    number_to_words = NumberToWords(language=args.language,min_word_size=args.min_word_size)
-    word, digits_with_word = number_to_words.number_to_words(args.number)
-    print("{} yields {}\n".format(args.number,digits_with_word))
 
-    # test = "+1-(239)-419-4412"
-    # test_output = number_to_words.number_to_words(test)
-    # print("{} yields {}\n".format(test,test_output))
-    #
-    # test = "94786752242"
-    # test_output = number_to_words.number_to_words(test)
-    # print("{} yields {}\n".format(test,test_output))
-    #
-    # test = "256-401-946"
-    # test_output = number_to_words.number_to_words(test)
-    # print("{} yields {}\n".format(test,test_output))
-    #
-    # test = "3668332657"
-    # test_output = number_to_words.number_to_words(test)
-    # print("{} yields {}\n".format(test,test_output))
-    #
-    # test = "56183549-0367"
-    # test_output = number_to_words.number_to_words(test)
-    # print("{} yields {}\n".format(test,test_output))
+    if args.number:
+        word, digits_with_word = number_to_words.number_to_words(args.number)
+        print("{} yields {}\n".format(args.number,digits_with_word))
+    else:
+        test = "1-(800)-123433"
+        word, digits_with_word = number_to_words.number_to_words(test)
+        print("{} yields {}\n".format(test,digits_with_word))
+
+        # test = "800-PAI)(--NT@ER"
+        # test_output = number_to_words(test)
+        # print("{} yields {}\n".format(test,test_output))
+        #
+        # test = "1-800-//DOPG /+"
+        # test_output = number_to_words(test)
+        # print("{} yields {}\n".format(test,test_output))
+        #
+        # test = "1-800-WILL 'as fd 3'"
+        # test_output = number_to_words(test)
+        # print("{} yields {}\n".format(test,test_output))
+
+        # test = "+1-(239)-419-4412"
+        # test_output = number_to_words.number_to_words(test)
+        # print("{} yields {}\n".format(test,test_output))
+        #
+        # test = "94786752242"
+        # test_output = number_to_words.number_to_words(test)
+        # print("{} yields {}\n".format(test,test_output))
+        #
+        # test = "256-401-946"
+        # test_output = number_to_words.number_to_words(test)
+        # print("{} yields {}\n".format(test,test_output))
+        #
+        # test = "3668332657"
+        # test_output = number_to_words.number_to_words(test)
+        # print("{} yields {}\n".format(test,test_output))
+        #
+        # test = "56183549-0367"
+        # test_output = number_to_words.number_to_words(test)
+        # print("{} yields {}\n".format(test,test_output))

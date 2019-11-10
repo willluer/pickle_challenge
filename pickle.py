@@ -1,60 +1,50 @@
 import re
+import utils
 
-letter_map = {"0":[],\
-              "1":[],\
-              "2":["A","B","C"],\
-              "3":["D","E","F"],\
-              "4":["G","H","I"],\
-              "5":["J","K","L"],\
-              "6":["M","N","O"],\
-              "7":["P","Q","R","S"],\
-              "8":["T","U","V"],\
-              "9":["W","X","Y","Z"]}
+class WordsToNumber():
+    def __init__(self):
+        self.digit_map = utils.get_digit_map(file=config)
+        self.char_map = utils.construct_char_map(self.digit_map)
 
-def words_to_number(number):
-    # Clean input (remove any acceptable non alphanumeric characters and make uppercase)
-    number = clean_input(number)
+    def words_to_number(self,number):
+        # Clean input (remove any acceptable non alphanumeric characters and make uppercase)
+        number = utils.clean_input(number)
 
-    # Make sure input is valid
-    if not is_valid_input(number):
-        return "Input phone number must have 10 or 11 digits (xxx-xxx-xxxx or x-xxx-xxx-xxxx) and only accepts the following non alphanumeric characters /().- "
+        # Make sure input is valid
+        if not self.is_valid_input(number):
+            return None
 
-    # Substitute letters with digits
-    for i in range(len(number)):
-        currentChar = number[i]
-        if currentChar.isalpha():
-            number = number[0:i] + char_to_number(currentChar) + number[i+1:]
+        # Substitute letters with digits
+        for i in range(len(number)):
+            currentChar = number[i]
+            if currentChar.isalpha():
+                number = number[0:i] + char_to_number(currentChar) + number[i+1:]
 
-    # Add dashes back to number
-    output = number_corrected_format(number)
+        # Add dashes back to number
+        output = number_corrected_format(number)
 
-    return output
+        return output
 
-# Removes acceptable non alphanumeric characters
-# Converts characters to uppercase
-def clean_input(input):
-    cleaned = re.sub('[/().-]','',input.upper())
-    return cleaned
+    # Makes sure there are only alphanumeric characters in the input
+    def is_valid_input(self,input):
+        regex = re.compile('[\W]')
+        if regex.search(input):
+            print("Input phone number only accepts the following non alphanumeric characters /().-+")
+            return False
+        return True
 
-# Makes sure there are only alphanumeric characters in the input
-def is_valid_input(input):
-    regex = re.compile('[\W]')
-    if regex.search(input):
-        return False
-    return True
+    # Dict lookup
+    def char_to_number(self,letter):
+        for number,letters in letter_map.items():
+            if letter in letters:
+                return number
 
-# Dict lookup
-def char_to_number(letter):
-    for number,letters in letter_map.items():
-        if letter in letters:
-            return number
-
-# Prepare number for printing
-def number_corrected_format(number):
-    if len(number) == 10:
-        return number[:3]+"-"+number[3:6]+"-"+number[6:]
-    else:
-        return number[0]+"-"+number[1:4]+"-"+number[4:7]+"-"+number[7:]
+    # Prepare number for printing
+    def number_corrected_format(self,number):
+        if len(number) == 10:
+            return number[:3]+"-"+number[3:6]+"-"+number[6:]
+        else:
+            return number[0]+"-"+number[1:4]+"-"+number[4:7]+"-"+number[7:]
 
 
 
