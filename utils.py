@@ -47,7 +47,7 @@ def construct_char_map(digit_map):
 def is_valid_input(input,regex):
     regex = re.compile(regex)
     if regex.search(input):
-        print("Input phone number only accepts the following non alphanumeric characters /().-+")
+        print("Input phone number may only contain the following non alphanumeric characters /().-+")
         return False
     if not (len(input) == 10 or len(input) == 11):
         print("Input phone number must have 10 or 11 digits")
