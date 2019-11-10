@@ -18,7 +18,7 @@ class NumberToWords:
         number = utils.clean_input(number)
 
         # Check input
-        if not self.is_valid_input(number):
+        if not utils.is_valid_input(number,regex="[\W\D]"):
             return None
 
         # returns a string word
@@ -69,17 +69,6 @@ class NumberToWords:
             return None
 
         return self.csp_solver.find_word(test_digits) # None if no word exists, the word if it does
-
-    # Makes sure there are only numeric characters in the input
-    def is_valid_input(self,input):
-        regex = re.compile('[\W\D]')
-        if regex.search(input):
-            print("Input phone number only accepts the following non alphanumeric characters /().-+")
-            return False
-        if not (len(input) == 10 or len(input) == 11):
-            print("Input phone number must have 10 or 11 digits")
-            return False
-        return True
 
 
 if __name__ == "__main__":

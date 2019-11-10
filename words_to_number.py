@@ -1,8 +1,9 @@
 import re
 import utils
+import argparse
 
 class WordsToNumber():
-    def __init__(self):
+    def __init__(self,config="config.json"):
         self.digit_map = utils.get_digit_map(file=config)
         self.char_map = utils.construct_char_map(self.digit_map)
 
@@ -11,33 +12,19 @@ class WordsToNumber():
         number = utils.clean_input(number)
 
         # Make sure input is valid
-        if not self.is_valid_input(number):
+        if not utils.is_valid_input(number,regex="[\W]"):
             return None
 
         # Substitute letters with digits
         for i in range(len(number)):
             currentChar = number[i]
             if currentChar.isalpha():
-                number = number[0:i] + char_to_number(currentChar) + number[i+1:]
+                number = number[0:i] + self.char_map[currentChar] + number[i+1:]
 
         # Add dashes back to number
-        output = number_corrected_format(number)
+        output = self.number_corrected_format(number)
 
         return output
-
-    # Makes sure there are only alphanumeric characters in the input
-    def is_valid_input(self,input):
-        regex = re.compile('[\W]')
-        if regex.search(input):
-            print("Input phone number only accepts the following non alphanumeric characters /().-+")
-            return False
-        return True
-
-    # Dict lookup
-    def char_to_number(self,letter):
-        for number,letters in letter_map.items():
-            if letter in letters:
-                return number
 
     # Prepare number for printing
     def number_corrected_format(self,number):
@@ -49,22 +36,38 @@ class WordsToNumber():
 
 
 if __name__ == "__main__":
-    test = "1-(800)-PAI/NT.ER"
-    test_output = words_to_number(test)
-    print("{} yields {}\n".format(test,test_output))
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--number","-n", help="Phone number to look for words within. Must contain 10 or 11 digits and must be only digits and the following characters: /()\+.-", \
+                        required=False,default=None)
 
-    test = "800-PAI)(--NT@ER"
-    test_output = words_to_number(test)
-    print("{} yields {}\n".format(test,test_output))
+    args = parser.parse_args()
 
-    test = "1-800-//DOPG /+"
-    test_output = words_to_number(test)
-    print("{} yields {}\n".format(test,test_output))
+    words_to_number = WordsToNumber()
 
-    test = "1-800-WILL 'as fd 3'"
-    test_output = words_to_number(test)
-    print("{} yields {}\n".format(test,test_output))
+    if args.number:
+        output = words_to_number.words_to_number(args.number)
+        print("{} yields {}\n".format(args.number,output))
+    else:
+        test = "1-(800)-1234323"
+        output = words_to_number.words_to_number(test)
+        print("{} yields {}\n".format(test,output))
 
-    test = "WILL-PAINTER"
-    test_output = words_to_number(test)
-    print("{} yields {}\n".format(test,test_output))
+        test = "1-(800)-PAI/NT.ER"
+        test_output = words_to_number.words_to_number(test)
+        print("{} yields {}\n".format(test,test_output))
+
+        test = "800-PAI)(--NT@ER"
+        test_output = words_to_number.words_to_number(test)
+        print("{} yields {}\n".format(test,test_output))
+        #
+        test = "1-800-//DOPG /+"
+        test_output = words_to_number.words_to_number(test)
+        print("{} yields {}\n".format(test,test_output))
+        #
+        test = "1-800-WILL 'as fd 3'"
+        test_output = words_to_number.words_to_number(test)
+        print("{} yields {}\n".format(test,test_output))
+        #
+        test = "SDFH++++AD3S9NH"
+        test_output = words_to_number.words_to_number(test)
+        print("{} yields {}\n".format(test,test_output))
