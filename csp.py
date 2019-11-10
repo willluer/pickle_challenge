@@ -1,24 +1,23 @@
 from constraint import *
 import enchant
+import utils
 
 class CspSolver:
-    def __init__(self):
-        self.letter_map = {"0":[],\
-                      "1":[],\
-                      "2":["A","B","C"],\
-                      "3":["D","E","F"],\
-                      "4":["G","H","I"],\
-                      "5":["J","K","L"],\
-                      "6":["M","N","O"],\
-                      "7":["P","Q","R","S"],\
-                      "8":["T","U","V"],\
-                      "9":["W","X","Y","Z"]}
+    def __init__(self,language="en_US",config="config.json"):
+        self.letter_map = utils.get_letter_map(file=config)
+        self.language = language
+        print(self.language)
+
 
     def find_all_words(self,number):
         return self.create_problem(number).getSolutions()
 
     def find_word(self,number):
-        return self.create_problem(number).getSolution()
+        soln = self.create_problem(number).getSolution()
+        if soln:
+            return self.construct_str(soln,number)
+        else:
+            return None
 
     def create_problem(self,number):
         problem = Problem()
@@ -40,7 +39,7 @@ class CspSolver:
 
     def is_solution(self,*word):
         word = "".join(list(word)) # Converts to string
-        is_valid = enchant.Dict("en_US").check(word)
+        is_valid = enchant.Dict(self.language).check(word)
         # if is_valid:
             # print("{} is valid? {}".format(word,is_valid))
         return is_valid
@@ -51,7 +50,6 @@ class CspSolver:
         for i in range(10):
             n_count[str(i)] = 0
 
-        print(n_count)
         for d in number:
             result_str+=result_dict["{}-{}".format(d,n_count[d])]
             n_count[d] += 1
@@ -60,13 +58,14 @@ class CspSolver:
 
 if __name__ == "__main__":
     csp_solver = CspSolver()
-    n = "724"
+    n = "433"
     word = csp_solver.find_word(n)
-    word_str = csp_solver.construct_str(word,n)
-    print(word_str)
+    print(word)
+    # word_str = csp_solver.construct_str(word,n)
+    # print(word_str)
 
-    words = csp_solver.find_all_words(n)
-    words_str = []
-    for word in words:
-        words_str.append(csp_solver.construct_str(word,n))
-    print(words_str)
+    # words = csp_solver.find_all_words(n)
+    # words_str = []
+    # for word in words:
+    #     words_str.append(csp_solver.construct_str(word,n))
+    # print(words_str)
