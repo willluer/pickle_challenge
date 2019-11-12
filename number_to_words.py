@@ -7,7 +7,7 @@ class NumberToWords:
     def __init__(self,language="american_english",min_word_size=3,config="config.json"):
 
         self.digit_map = utils.get_digit_map(file=config)
-        self.char_map = utils.construct_char_map(self.digit_map)
+        self.char_map = utils.reverse_dict(self.digit_map)
         allowed_languages = utils.get_language_map(file=config)
         self.csp_solver = CspSolver(config=config,language=allowed_languages[language])
 
@@ -19,13 +19,13 @@ class NumberToWords:
 
         # Check input
         if not utils.is_valid_input(number,regex="[\W\D]"):
-            return None
+            return None,None
 
         # returns a string word
         word,digits = self.find_word(number)
-        number = number.replace(digits,word,1)
 
         if word:
+            number = utils.rreplace(number,digits,word,1)
             return word, number
         else:
             print("No words found")

@@ -2,10 +2,10 @@ import re
 import utils
 import argparse
 
-class WordsToNumber():
+class WordsToNumber:
     def __init__(self,config="config.json"):
         self.digit_map = utils.get_digit_map(file=config)
-        self.char_map = utils.construct_char_map(self.digit_map)
+        self.char_map = utils.reverse_dict(self.digit_map)
 
     def words_to_number(self,number):
         # Clean input (remove any acceptable non alphanumeric characters and make uppercase)

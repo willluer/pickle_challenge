@@ -6,11 +6,16 @@ class CspSolver:
     def __init__(self,language="en_US",config="config.json"):
         self.digit_map = utils.get_digit_map(file=config)
         self.language = language
-        print(self.language)
-
 
     def find_all_words(self,number):
-        return self.create_problem(number).getSolutions()
+        solns = self.create_problem(number).getSolutions()
+        solns_cleaned = []
+        if solns:
+            for soln in solns:
+                solns_cleaned.append(self.construct_str(soln,number))
+        else:
+            return None
+        return solns_cleaned
 
     def find_word(self,number):
         soln = self.create_problem(number).getSolution()
@@ -41,7 +46,7 @@ class CspSolver:
         word = "".join(list(word)) # Converts to string
         is_valid = enchant.Dict(self.language).check(word)
         # if is_valid:
-            # print("{} is valid? {}".format(word,is_valid))
+        #     print("{} is valid? {}".format(word,is_valid))
         return is_valid
 
     def construct_str(self,result_dict,number):
