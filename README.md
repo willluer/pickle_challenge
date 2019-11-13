@@ -1,44 +1,41 @@
 # Pickle Robotics Coding Challenge
 
-### Overview:
+## Overview:
 This repository contains all of the source code required to complete the challenge provided by Pickle Robotics.
 
-### Requirements:
-* Python 3.7.5
-* pyenchant 2.0.0
-* python-constraint 1.4.0
+## Requirements:  
+ * python 3.7.5  
+ * pyenchant 2.0.0  
+ * python-constraint 1.4.0  
 
-### Installation:
-If you use conda/miniconda environments:
-* `git clone https://Willluer@bitbucket.org/Willluer/pickle_challenge.git`
-* `cd pickle_challenge`
-* `conda install requirements.txt`
-* pip install pyenchant
+## Installation:
+If you use conda/miniconda environments:  
+* `git clone https://Willluer@bitbucket.org/Willluer/pickle_challenge.git`  
+* `cd pickle_challenge`  
+* `conda install requirements.txt`  
+* `pip install pyenchant`  
 
-If you do not use conda/miniconda environments:
-* `pip install python-constraint`
-* `pip install pyenchant`
+If you do not use conda/miniconda environments:  
+* `pip install python-constraint`  
+* `pip install pyenchant`  
 
+## Usage:
+NOTE: If you are using conda, ensure the appropriate conda environment is activated with the following command: `conda activate pickle`
 
-### Usage:
-NOTE: If you are using conda, ensure the appropriate conda environment is activated with the following command `conda activate pickle`
+#### number_to_words:
+`python number_to_words.py [-h] [--number NUMBER] [--language {american_english,australian_english,british_english,german,french}] [--min-word-size {1,2,3,4,5,6,7,8,9,10,11}]`  
+  
+Example: `python number_to_words.py --number 1800PAINTER --language american_english --min-word-size 7`
 
-##### number_to_words:
-`python number_to_words.py [-h] [--number NUMBER] [--language {american_english,australian_english,british_english,german,french}] [--min-word-size {1,2,3,4,5,6,7,8,9,10,11}]`
-<br>
-<br>
-Example usage: `python number_to_words.py --number 1800PAINTER --language american_english --min-word-size 7`
+#### words_to_number:
+`python words_to_number.py [-h] [--number NUMBER]`  
+  
+Example: `python words_to_number.py --number 1800PAINTER`
 
-##### words_to_number:
-`python words_to_number.py [-h] [--number NUMBER]`
-<br>
-<br>
-Example usage: `python number_to_words.py --number 1800PAINTER`
-
-##### all_wordifications:
-`python all_wordifications.py [-h] [--number NUMBER] [--language {american_english,australian_english,british_english,german,french}] [--min-word-size {1,2,3,4,5,6,7,8,9,10,11}]`
-<br><br>
-Example usage: `python number_to_words.py --number 18007246837 --language american_english --min-word-size 7`
+#### all_wordifications:
+`python all_wordifications.py [-h] [--number NUMBER] [--language {american_english,australian_english,british_english,german,french}] [--min-word-size {1,2,3,4,5,6,7,8,9,10,11}]`  
+  
+Example: `python all_wordifications.py --number 18007246837 --language american_english --min-word-size 7`
 
 ### Assumptions and Design Decisions:
 1. Characters/letters conform to the ITU E.161 standard (standard telephone keypad)
