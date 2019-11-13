@@ -5,7 +5,7 @@ import utils
 class AllWordifications(NumberToWords):
     def __init__(self,language="american_english",min_word_size=3,config="config.json"):
         super().__init__(language,min_word_size,config)
-
+        self.memos = set()
 
     def all_wordifications(self,number):
         # Clean input (remove any non alphanumeric characters and make uppercase)
@@ -29,16 +29,20 @@ class AllWordifications(NumberToWords):
         # Stitch together all possible combinations of
         self.digit_arr = list(solutions.keys())
         self.soln_arr = list(solutions.values())
-        print(self.digit_arr)
-        print(self.soln_arr)
+
         solutions = set(self.wordification_helper_recursive(i=0,j=0,current_number=number,nth_repl=1))
         solutions.add(number)
         return solutions
 
-        
+
     def wordification_helper_recursive(self,i,j,current_number,nth_repl):
         # digits_to_replace = digit_arr[i]
         # word_to_replace_with = soln_arr[i][j]
+
+        # Memoization
+        if (current_number,i,j,nth_repl) in self.memos:
+            return []
+        self.memos.add((current_number,i,j,nth_repl))
 
         # Base case
         if i >= len(self.soln_arr):
