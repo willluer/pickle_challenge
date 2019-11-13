@@ -13,7 +13,7 @@ class AllWordifications(NumberToWords):
 
         # Check input
         if not utils.is_valid_input(number,regex="[\W\D]"):
-            return None,None
+            return None
 
         # returns a string word
         solutions = self.find_words(number)
@@ -22,8 +22,8 @@ class AllWordifications(NumberToWords):
             numbers = self.create_all_wordifications(number,solutions)
             return numbers
         else:
-            print("No words found")
-            return None, None
+            # print("No words found")
+            return None
 
     def create_all_wordifications(self,number,solutions):
         # Stitch together all possible combinations of
@@ -34,6 +34,8 @@ class AllWordifications(NumberToWords):
         solutions = set(self.wordification_helper_recursive(i=0,j=0,current_number=number,nth_repl=1))
         solutions.add(number)
         return solutions
+
+        
     def wordification_helper_recursive(self,i,j,current_number,nth_repl):
         # digits_to_replace = digit_arr[i]
         # word_to_replace_with = soln_arr[i][j]
@@ -140,7 +142,7 @@ class AllWordifications(NumberToWords):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--number","-n", help="Phone number to look for words within. Must contain 10 or 11 digits and must be only digits and the following characters: /()\+.-", \
-                        required=False,default=None)
+                        required=True,default=None)
     parser.add_argument("--language", "-l", help="Language to use.", \
                         default="american_english", choices=["american_english","australian_english", "british_english", "german","french"])
     parser.add_argument("--min-word-size", "-m", help="Minimum sized word to find. Must be an int.", \
@@ -151,10 +153,12 @@ if __name__ == "__main__":
                                     min_word_size=args.min_word_size)
 
 
-    if args.number:
-        words = all_wordifications.all_wordifications(args.number)
-        print("{} yields \n{}\n".format(args.number,words))
+    words = all_wordifications.all_wordifications(args.number)
+
+    if words:
+        print("All Wordifications: ")
+        print("==========================")
+        for i,word in enumerate(words):
+            print("{}. {}".format(i,word))
     else:
-        test = "1-(800)-8231433"
-        words = all_wordifications.all_wordifications(test)
-        print("{} yields {}\n".format(test,words))
+        print("No words were found in {}".format(args.number))

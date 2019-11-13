@@ -28,7 +28,6 @@ class NumberToWords:
             number = utils.rreplace(number,digits,word,1)
             return word, number
         else:
-            print("No words found")
             return None, None
 
     # Iterate through backwards
@@ -74,7 +73,7 @@ class NumberToWords:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--number","-n", help="Phone number to look for words within. Must contain 10 or 11 digits and must be only digits and the following characters: /()\+.-", \
-                        required=False,default=None)
+                        required=True,default=None)
     parser.add_argument("--language", "-l", help="Language to use.", \
                         default="american_english", choices=["american_english","australian_english", "british_english", "german","french"])
     parser.add_argument("--min-word-size", "-m", help="Minimum sized word to find. Must be an int.", \
@@ -85,42 +84,8 @@ if __name__ == "__main__":
                                     min_word_size=args.min_word_size)
 
 
-    if args.number:
-        word, digits_with_word = number_to_words.number_to_words(args.number)
+    word, digits_with_word = number_to_words.number_to_words(args.number)
+    if word:
         print("{} yields {}\n".format(args.number,digits_with_word))
     else:
-        test = "1-(800)-123433"
-        word, digits_with_word = number_to_words.number_to_words(test)
-        print("{} yields {}\n".format(test,digits_with_word))
-
-        # test = "800-PAI)(--NT@ER"
-        # test_output = number_to_words(test)
-        # print("{} yields {}\n".format(test,test_output))
-        #
-        # test = "1-800-//DOPG /+"
-        # test_output = number_to_words(test)
-        # print("{} yields {}\n".format(test,test_output))
-        #
-        # test = "1-800-WILL 'as fd 3'"
-        # test_output = number_to_words(test)
-        # print("{} yields {}\n".format(test,test_output))
-
-        # test = "+1-(239)-419-4412"
-        # test_output = number_to_words.number_to_words(test)
-        # print("{} yields {}\n".format(test,test_output))
-        #
-        # test = "94786752242"
-        # test_output = number_to_words.number_to_words(test)
-        # print("{} yields {}\n".format(test,test_output))
-        #
-        # test = "256-401-946"
-        # test_output = number_to_words.number_to_words(test)
-        # print("{} yields {}\n".format(test,test_output))
-        #
-        # test = "3668332657"
-        # test_output = number_to_words.number_to_words(test)
-        # print("{} yields {}\n".format(test,test_output))
-        #
-        # test = "56183549-0367"
-        # test_output = number_to_words.number_to_words(test)
-        # print("{} yields {}\n".format(test,test_output))
+        print("No words found")
