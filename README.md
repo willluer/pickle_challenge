@@ -108,8 +108,8 @@ Ex) To test number_to_words for all languages with minimum word sizes between 3 
 1. test_code.py contains code that will test number_to_words and all_wordifications by making use of words_to_number
 1. It will test number_to_words and/or all_wordifications for every language and with every minimum word size in the range of [min_word_size,max_min_word_size]
 1. The *--number-of-tests* parameter corresponds to how many numbers to generate and test for each language and min_word_size combination. It is recommended to keep this very small.
-1. It works by randomly generating a phone number, finding a word (or all wordificiations) from the phone number and then testing whether words_to_number finds the original randomly generated number
-1. If the generated number and original number are different, the number and paramters that led to the error are printed to a txt file  
+1. It works by randomly generating a phone number, finding a word (or all wordifications) from the phone number and then testing whether words_to_number finds the original randomly generated number
+1. If the generated number and original number are different, the number and parameters that led to the error are printed to a txt file  
 
 **NOTE**: Due to the number of combinations of languages and minimum word sizes, this code base may produce more tests than a user anticipates so use with caution  
 **NOTE**: the *print_search_progress* parameter is an interesting way of visualizing the search state of the CSP. Sometimes, it can take a long time for the CSP to find a solution, so this will help understand why.  
