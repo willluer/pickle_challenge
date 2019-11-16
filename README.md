@@ -65,7 +65,7 @@ If you do not use conda/miniconda environments, install the required packages vi
 `[--min-word-size {1,2,3,4,5,6,7,8,9,10,11}]`  
 `[--print-search-progress]`  
 
-Ex) To run number_to_words on the number 18007246837 in American English with a minimum word size of 5  
+Ex) To run number_to_words on the number 1800742553 in German with a minimum word size of 5  
 **INPUT:** `python number_to_words.py --number 1800742553 --language german --min-word-size 5`  
 **OUTPUT:** `1800742553 yields 18007HALLE`  
 
@@ -83,7 +83,7 @@ Ex) To run words_to_number on the number 1800PAINTER
 `[--min-word-size {1,2,3,4,5,6,7,8,9,10,11}]`  
 `[--print-search-progress]`  
 
-Ex) To run all_wordifications on the number 18007246837 in American English with a minimum word size of 3  
+Ex) To run all_wordifications on the number 18007216837 in American English with a minimum word size of 3  
 **INPUT:** `python all_wordifications.py --number 18007216837 --language american_english --min-word-size 3`  
 **OUTPUT:**  
 `All Wordifications:`  
@@ -93,8 +93,6 @@ Ex) To run all_wordifications on the number 18007246837 in American English with
 `2. 18007216837`  
 `3. 1800721OTES`  
 `4. 1800721MUDS`  
-
-
 
 ### Testing
 `test_code.py [-h] [--number-of-tests NUMBER_OF_TESTS]`  
