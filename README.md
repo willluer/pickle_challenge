@@ -26,14 +26,16 @@ NOTE: If you are using conda, ensure the appropriate conda environment is activa
 `[--min-word-size {1,2,3,4,5,6,7,8,9,10,11}]`  
 `[--print-search-progress]`  
 
-Ex) To run number_to_words on the number 18007246837 in American English with a minimum word size of 7  
-Example: `python number_to_words.py --number 18007246837 --language american_english --min-word-size 7`
+Ex) To run number_to_words on the number 18007246837 in American English with a minimum word size of 5  
+**INPUT:** `python number_to_words.py --number 1800742553 --language german --min-word-size 5`  
+**OUTPUT:** `1800742553 yields 18007HALLE`  
 
 #### words_to_number:
 `python words_to_number.py [-h] [--number NUMBER]`  
 
 Ex) To run words_to_number on the number 1800PAINTER  
-`python words_to_number.py --number 1800PAINTER`
+**INPUT:** `python words_to_number.py --number 1800PAINTER`  
+**OUTPUT:** `1800PAINTER yields 1-800-724-6837`  
 
 #### all_wordifications:
 `python all_wordifications.py [-h]`  
@@ -42,9 +44,16 @@ Ex) To run words_to_number on the number 1800PAINTER
 `[--min-word-size {1,2,3,4,5,6,7,8,9,10,11}]`  
 `[--print-search-progress]`  
 
-Ex) To run all_wordifications on the number 18007246837 in American English with a minimum word size of 7  
-`python all_wordifications.py --number 18007246837 --language american_english --min-word-size 7`
-
+Ex) To run all_wordifications on the number 18007246837 in American English with a minimum word size of 3  
+**INPUT:** `python all_wordifications.py --number 18007216837 --language american_english --min-word-size 3`  
+**OUTPUT:**  
+`All Wordifications:`  
+`==========================`  
+`0. 1800721MUD7`  
+`1. 1800721OVER`  
+`2. 18007216837`  
+`3. 1800721OTES`  
+`4. 1800721MUDS`  
 
 ### Assumptions:
 1. Characters/letters conform to the ITU E.161 standard (standard telephone keypad).
@@ -91,15 +100,15 @@ Ex) To run all_wordifications on the number 18007246837 in American English with
                     `[--min-word-size {1,2,3,4,5,6,7,8,9,10,11}]`  
                     `[--max-min-word-size {1,2,3,4,5,6,7,8,9,10,11}]`  
                     `[--print-search-progress]`  
-  
-Ex) To test number_to_words for all languages with minimum word sizes between 3 and 4:  
-`python test_code.py --test-number-to-words --min-word-size 3 --max-min-word-size 4`
 
+Ex) To test number_to_words for all languages with minimum word sizes between 3 and 4:  
+**INPUT:**`python test_code.py --test-number-to-words --min-word-size 3 --max-min-word-size 4`  
+**OUTPUT:**
 1. test_code.py contains code that will test number_to_words and all_wordifications by making use of words_to_number
 1. It will test number_to_words and/or all_wordifications for every language and with every minimum word size in the range of [min_word_size,max_min_word_size]
 1. The *--number-of-tests* parameter corresponds to how many numbers to generate and test for each language and min_word_size combination. It is recommended to keep this very small.
 1. It works by randomly generating a phone number, finding a word (or all wordificiations) from the phone number and then testing whether words_to_number finds the original randomly generated number
 1. If the generated number and original number are different, the number and paramters that led to the error are printed to a txt file  
-  
+
 **NOTE**: Due to the number of combinations of languages and minimum word sizes, this code base may produce more tests than a user anticipates so use with caution  
 **NOTE**: the *print_search_progress* parameter is an interesting way of visualizing the search state of the CSP. Sometimes, it can take a long time for the CSP to find a solution, so this will help understand why.  
