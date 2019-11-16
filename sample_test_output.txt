@@ -1,0 +1,43 @@
+$ python test_code.py --test-number-to-words --min-word-size 3 --max-min-word-size 4
+
+Beginning tests for min_word_size=3 and language=american_english
+Testing number: 4303712762
+N2W took 0.19 seconds
+
+Beginning tests for min_word_size=3 and language=german
+Testing number: 12743262241
+N2W took 0.53 seconds
+
+Beginning tests for min_word_size=3 and language=french
+Testing number: 61144036203
+N2W took 0.12 seconds
+
+Beginning tests for min_word_size=3 and language=british_english
+Testing number: 07260217713
+N2W took 0.49 seconds
+
+Beginning tests for min_word_size=3 and language=australian_english
+Testing number: 14207166320
+N2W took 2.89 seconds
+
+Beginning tests for min_word_size=4 and language=american_english
+Testing number: 77716661366
+N2W took 0.0 seconds
+
+Beginning tests for min_word_size=4 and language=german
+Testing number: 2707303046
+N2W took 0.0 seconds
+
+Beginning tests for min_word_size=4 and language=french
+Testing number: 64111312431
+N2W took 0.0 seconds
+
+Beginning tests for min_word_size=4 and language=british_english
+Testing number: 30321462370
+N2W took 1.67 seconds
+
+Beginning tests for min_word_size=4 and language=australian_english
+Testing number: 3201714714
+N2W took 0.0 seconds
+
+Took 5.898183822631836 seconds to complete all tests
