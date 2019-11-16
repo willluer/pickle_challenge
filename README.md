@@ -14,46 +14,7 @@ If you use conda/miniconda environments:
 `cd pickle_challenge`  
 `conda env create -f environment.yml`  
 
-If you do not use conda/miniconda environments, install the required packages via pip.
-
-## Usage:
-NOTE: If you are using conda, ensure the appropriate conda environment is activated with the following command: `conda activate pickle`
-
-#### number_to_words:
-`python number_to_words.py [-h]`  
-`[--number NUMBER]`  
-`[--language {american_english,australian_english,british_english,german,french}]`   
-`[--min-word-size {1,2,3,4,5,6,7,8,9,10,11}]`  
-`[--print-search-progress]`  
-
-Ex) To run number_to_words on the number 18007246837 in American English with a minimum word size of 5  
-**INPUT:** `python number_to_words.py --number 1800742553 --language german --min-word-size 5`  
-**OUTPUT:** `1800742553 yields 18007HALLE`  
-
-#### words_to_number:
-`python words_to_number.py [-h] [--number NUMBER]`  
-
-Ex) To run words_to_number on the number 1800PAINTER  
-**INPUT:** `python words_to_number.py --number 1800PAINTER`  
-**OUTPUT:** `1800PAINTER yields 1-800-724-6837`  
-
-#### all_wordifications:
-`python all_wordifications.py [-h]`  
-`[--number NUMBER]`  
-`[--language {american_english,australian_english,british_english,german,french}]`  
-`[--min-word-size {1,2,3,4,5,6,7,8,9,10,11}]`  
-`[--print-search-progress]`  
-
-Ex) To run all_wordifications on the number 18007246837 in American English with a minimum word size of 3  
-**INPUT:** `python all_wordifications.py --number 18007216837 --language american_english --min-word-size 3`  
-**OUTPUT:**  
-`All Wordifications:`  
-`==========================`  
-`0. 1800721MUD7`  
-`1. 1800721OVER`  
-`2. 18007216837`  
-`3. 1800721OTES`  
-`4. 1800721MUDS`  
+If you do not use conda/miniconda environments, install the required packages via pip.  
 
 ### Assumptions:
 1. Characters/letters conform to the ITU E.161 standard (standard telephone keypad).
@@ -92,7 +53,48 @@ Ex) To run all_wordifications on the number 18007246837 in American English with
 ### Heuristics
 1. In searching for a solution to number_to_words, I begin looking for words at the end of the number sequence. This is based off a heuristic in which words are more likely to be at the end of telephone numbers due to country and area codes being at the beginning of telephone numbers.
 1. For the CSP, I use a constraint that solutions cannot contain a 0 or a 1 since they do not map to any alpha characters and that a solution must have at least one vowel (or 'Y'). These constraints allow for pruning of branches in the search tree that do not lead to any valid solutions.
-1. I implemented a dynamic programming approach called memoization to speed up the recursive program responsible for stitching together all possible solutions.
+1. I implemented a dynamic programming approach called memoization to speed up the recursive program responsible for stitching together all possible solutions.  
+
+## Usage:
+**NOTE:** If you are using conda, ensure the appropriate conda environment is activated with the following command: `conda activate pickle`  
+
+#### number_to_words:
+`python number_to_words.py [-h]`  
+`[--number NUMBER]`  
+`[--language {american_english,australian_english,british_english,german,french}]`   
+`[--min-word-size {1,2,3,4,5,6,7,8,9,10,11}]`  
+`[--print-search-progress]`  
+
+Ex) To run number_to_words on the number 18007246837 in American English with a minimum word size of 5  
+**INPUT:** `python number_to_words.py --number 1800742553 --language german --min-word-size 5`  
+**OUTPUT:** `1800742553 yields 18007HALLE`  
+
+#### words_to_number:
+`python words_to_number.py [-h] [--number NUMBER]`  
+
+Ex) To run words_to_number on the number 1800PAINTER  
+**INPUT:** `python words_to_number.py --number 1800PAINTER`  
+**OUTPUT:** `1800PAINTER yields 1-800-724-6837`  
+
+#### all_wordifications:
+`python all_wordifications.py [-h]`  
+`[--number NUMBER]`  
+`[--language {american_english,australian_english,british_english,german,french}]`  
+`[--min-word-size {1,2,3,4,5,6,7,8,9,10,11}]`  
+`[--print-search-progress]`  
+
+Ex) To run all_wordifications on the number 18007246837 in American English with a minimum word size of 3  
+**INPUT:** `python all_wordifications.py --number 18007216837 --language american_english --min-word-size 3`  
+**OUTPUT:**  
+`All Wordifications:`  
+`==========================`  
+`0. 1800721MUD7`  
+`1. 1800721OVER`  
+`2. 18007216837`  
+`3. 1800721OTES`  
+`4. 1800721MUDS`  
+
+
 
 ### Testing
 `test_code.py [-h] [--number-of-tests NUMBER_OF_TESTS]`  
