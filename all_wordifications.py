@@ -3,8 +3,8 @@ import argparse
 import utils
 
 class AllWordifications(NumberToWords):
-    def __init__(self,language="american_english",min_word_size=3,config="config.json"):
-        super().__init__(language,min_word_size,config)
+    def __init__(self,language="american_english",min_word_size=3,config="config.json",print_search_progress=False):
+        super().__init__(language,min_word_size,config,print_search_progress)
         self.memos = set()
 
     def all_wordifications(self,number):

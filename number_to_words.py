@@ -4,12 +4,12 @@ import argparse
 import utils
 
 class NumberToWords:
-    def __init__(self,language="american_english",min_word_size=3,config="config.json"):
+    def __init__(self,language="american_english",min_word_size=3,config="config.json",print_search_progress=False):
 
         self.digit_map = utils.get_digit_map(file=config)
         self.char_map = utils.reverse_dict(self.digit_map)
         allowed_languages = utils.get_language_map(file=config)
-        self.csp_solver = CspSolver(config=config,language=allowed_languages[language])
+        self.csp_solver = CspSolver(config=config,language=allowed_languages[language],print_search_progress=print_search_progress)
 
         self.min_word_size = min_word_size
 
