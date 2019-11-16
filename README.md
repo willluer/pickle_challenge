@@ -103,7 +103,8 @@ Ex) To run all_wordifications on the number 18007216837 in American English with
 
 Ex) To test number_to_words for all languages with minimum word sizes between 3 and 4:  
 **INPUT:**`python test_code.py --test-number-to-words --min-word-size 3 --max-min-word-size 4`  
-**OUTPUT:**
+**OUTPUT:** `See sample_test_output.txt file for output`
+
 1. test_code.py contains code that will test number_to_words and all_wordifications by making use of words_to_number
 1. It will test number_to_words and/or all_wordifications for every language and with every minimum word size in the range of [min_word_size,max_min_word_size]
 1. The *--number-of-tests* parameter corresponds to how many numbers to generate and test for each language and min_word_size combination. It is recommended to keep this very small.
