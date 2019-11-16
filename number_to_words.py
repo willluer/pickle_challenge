@@ -78,10 +78,14 @@ if __name__ == "__main__":
                         default="american_english", choices=["american_english","australian_english", "british_english", "german","french"])
     parser.add_argument("--min-word-size", "-m", help="Minimum sized word to find. Must be an int.", \
                         type=int,default=3,choices=range(1,12))
+    parser.add_argument("--print-search-progress", help="Print the search progress of the CSP (just for debugging purposes to make sure code's not stuck)", \
+                        action='store_true')
+
     args = parser.parse_args()
 
     number_to_words = NumberToWords(language=args.language,\
-                                    min_word_size=args.min_word_size)
+                                    min_word_size=args.min_word_size, \
+                                    print_search_progress=args.print_search_progress)
 
 
     word, digits_with_word = number_to_words.number_to_words(args.number)

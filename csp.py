@@ -3,9 +3,10 @@ import enchant
 import utils
 
 class CspSolver:
-    def __init__(self,language="en_US",config="config.json"):
+    def __init__(self,language="en_US",config="config.json",print_search_progress=False):
         self.digit_map = utils.get_digit_map(file=config)
         self.language = language
+        self.print_search_progress=print_search_progress
 
     def find_all_words(self,number):
         solns = self.create_problem(number).getSolutions()
@@ -44,6 +45,8 @@ class CspSolver:
 
     def is_solution(self,*word):
         word = "".join(list(word)) # Converts to string
+        if self.print_search_progress:
+            print(word)
         is_valid = enchant.Dict(self.language).check(word)
         # if is_valid:
         #     print("{} is valid? {}".format(word,is_valid))
