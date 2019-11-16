@@ -71,7 +71,7 @@ if __name__ == "__main__":
                         action='store_true')
 
     args = parser.parse_args()
-    print(args)
+
     allowed_languages = utils.get_language_map(file="config.json").keys()
     parameter_combinations = [[i, j] for i in range(args.min_word_size,args.max_min_word_size+1) for j in allowed_languages]
 
@@ -86,14 +86,14 @@ if __name__ == "__main__":
                 start = time.time()
                 test_number_to_words(random_number,language,min_word_size,args.print_search_progress)
                 runtime = time.time() - start
-                print("N2W took {} seconds".format(round(runtime,2)))
+                print("N2W took {} seconds\n".format(round(runtime,2)))
 
             # AllWordifications
             if args.test_all_wordifications:
                 start = time.time()
                 test_all_wordifications(random_number,language,min_word_size,args.print_search_progress)
                 runtime = time.time() - start
-                print("AW took {} seconds".format(round(runtime,2)))
+                print("AW took {} seconds\n".format(round(runtime,2)))
 
-    full_runtime = time.time() - start
-    print("Took {} seconds to complete all tests")
+    full_runtime = time.time() - full_start
+    print("Took {} seconds to complete all tests".format(full_runtime))
