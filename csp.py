@@ -8,6 +8,7 @@ class CspSolver:
         self.language = language
         self.print_search_progress=print_search_progress
 
+    # For all_wordifications
     def find_all_words(self,number):
         solns = self.create_problem(number).getSolutions()
         solns_cleaned = []
@@ -18,6 +19,7 @@ class CspSolver:
             return None
         return solns_cleaned
 
+    # For number_to_words
     def find_word(self,number):
         soln = self.create_problem(number).getSolution()
         if soln:
@@ -25,6 +27,7 @@ class CspSolver:
         else:
             return None
 
+    # Creates CSP problem
     def create_problem(self,number):
         problem = Problem()
         variables = []
@@ -43,6 +46,7 @@ class CspSolver:
         problem.addConstraint(FunctionConstraint(self.is_solution),variables)
         return problem
 
+    # Check if word in the appropriate language dictionary
     def is_solution(self,*word):
         word = "".join(list(word)) # Converts to string
         if self.print_search_progress:
@@ -52,6 +56,7 @@ class CspSolver:
         #     print("{} is valid? {}".format(word,is_valid))
         return is_valid
 
+    # Converts dictionary to string
     def construct_str(self,result_dict,number):
         result_str = ""
         n_count = {}
@@ -62,18 +67,3 @@ class CspSolver:
             result_str+=result_dict["{}-{}".format(d,n_count[d])]
             n_count[d] += 1
         return result_str
-
-
-if __name__ == "__main__":
-    csp_solver = CspSolver()
-    n = "433"
-    word = csp_solver.find_word(n)
-    print(word)
-    # word_str = csp_solver.construct_str(word,n)
-    # print(word_str)
-
-    # words = csp_solver.find_all_words(n)
-    # words_str = []
-    # for word in words:
-    #     words_str.append(csp_solver.construct_str(word,n))
-    # print(words_str)

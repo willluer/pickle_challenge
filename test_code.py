@@ -14,34 +14,29 @@ def test_number_to_words(n,language,min_word_size,print_search_progress):
     n2w = NumberToWords(language=language,min_word_size=min_word_size,print_search_progress=print_search_progress)
     w2n = WordsToNumber()
     error_file = "error_n2w.txt"
-
-    # for i in range(n_tests):
-    #     # if i % 10 == 0:
-    #     #     print("number_to_words on test #{}".format(i))
-        # n = gen_rand_number()
-    # print("Number: {}".format(n))
     word,digits = n2w.number_to_words(n)
+
+    # If solution found
     if digits:
         original = w2n.words_to_number(digits).replace("-","")
+
+        # If mismatch (BAD)
         if n != original:
             with open(error_file,"a") as file:
                 file.write("{},{},{},{},{}\n".format(n,digits,original,language,min_word_size))
 
-
+# Similar to above but tests every solution found by all_wordifications
 def test_all_wordifications(n,language,min_word_size,print_search_progress):
     w2n = WordsToNumber()
     aw = AllWordifications(language=language,min_word_size=min_word_size,print_search_progress=print_search_progress)
     error_file = "error_aw.txt"
-
-    # for i in range(n_tests):
-    #     # if i % 1 == 0:
-    #     #     print("all_wordifications on test #{}".format(i))
-    #     n = gen_rand_number()
-        # print(n)
     words = aw.all_wordifications(n)
+    # If solutions found
     if words:
         for word in words:
             original = w2n.words_to_number(word).replace("-","")
+
+            # If mismatch (BAD)
             if n != original:
                 with open(error_file,"a") as file:
                     file.write("{},{},{},{},{}\n".format(n,word,original,language,min_word_size))
@@ -69,18 +64,21 @@ if __name__ == "__main__":
                         type=int,default=3,choices=range(1,12))
     parser.add_argument("--print-search-progress", help="Print the search progress of the CSP (just for debugging purposes to make sure code's not stuck)", \
                         action='store_true')
-
     args = parser.parse_args()
 
     allowed_languages = utils.get_language_map(file="config.json").keys()
     parameter_combinations = [[i, j] for i in range(args.min_word_size,args.max_min_word_size+1) for j in allowed_languages]
 
     full_start = time.time()
+
+    # For every combination of min_word_size and language
     for min_word_size,language in parameter_combinations:
         print("Beginning tests for min_word_size={} and language={}".format(min_word_size,language))
+
         for i in range(args.number_of_tests):
             random_number = gen_rand_number()
             print("Testing number: {}".format(random_number))
+
             # NumberToWords
             if args.test_number_to_words:
                 start = time.time()

@@ -15,7 +15,7 @@ class AllWordifications(NumberToWords):
         if not utils.is_valid_input(number,regex="[\W\D]"):
             return None
 
-        # returns a string word
+        # returns a dict of {"#####":["WORD1","WORD2"]...}
         solutions = self.find_words(number)
 
         if solutions:
@@ -26,7 +26,6 @@ class AllWordifications(NumberToWords):
             return None
 
     def create_all_wordifications(self,number,solutions):
-        # Stitch together all possible combinations of
         self.digit_arr = list(solutions.keys())
         self.soln_arr = list(solutions.values())
 
@@ -35,6 +34,7 @@ class AllWordifications(NumberToWords):
         return solutions
 
 
+    # Recursive program to stitch together all possible solutions
     def wordification_helper_recursive(self,i,j,current_number,nth_repl):
         # digits_to_replace = digit_arr[i]
         # word_to_replace_with = soln_arr[i][j]
@@ -108,6 +108,7 @@ class AllWordifications(NumberToWords):
         else:
             return []
 
+    # Gets dictionary of solutions from CSP solver
     def get_valid_words(self,test_digits):
         digits_list = list(test_digits) # lists are easier than strings to work with
 

@@ -48,6 +48,7 @@ class NumberToWords:
         return None,0
 
 
+    # Sends current word to CSP
     def is_valid_word(self,test_digits):
         digits_list = list(test_digits) # lists are easier than strings to work with
 
